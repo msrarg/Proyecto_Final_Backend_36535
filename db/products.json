@@ -1,0 +1,32 @@
+[
+    {
+        "nombre": "Escuadra",
+        "descripcion": "Esta es la descripcion de la escuadra",
+        "codigo": "AA0011",
+        "precio": 123.45,
+        "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png",
+        "stock": 100,
+        "timestamp": 1655934586611,
+        "id": 1
+    },
+    {
+        "nombre": "Calculadora",
+        "descripcion": "Esta es la descripcion de la calculadora",
+        "codigo": "AA0012",
+        "precio": 234.56,
+        "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png",
+        "stock": 200,
+        "timestamp": 1655934586622,
+        "id": 2
+    },
+    {
+        "nombre": "Globo Terráqueo",
+        "descripcion": "Esta es la descripcion del globo terráqueo",
+        "codigo": "AA0013",
+        "precio": 345.67,
+        "foto": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png",
+        "stock": 300,
+        "timestamp": 1655934586633,
+        "id": 3
+    }
+]
