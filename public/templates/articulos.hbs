@@ -1,0 +1,52 @@
+<section style="background-color: #eee;" class="rounded border">
+    <div class="container py-5">
+    {{#if items.length}}
+        {{#each items}}
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-12 col-xl-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-5 col-xl-3 mb-4 mb-lg-0">
+                                    <img src="{{this.foto}}" class="w-100  rounded mx-auto d-block" />
+                                </div>
+                                <div class="col-md-6 d-flex flex-wrap col-lg-7 col-xl-9 mb-4 mb-lg-0">
+                                    <div class="col-12 col-xl-9">
+                                        <h5>{{this.nombre}}</h5>
+                                        <div class="mt-1 mb-0 text-muted small">
+                                            <span>Código: {{this.codigo}}</span>
+                                            <span class="text-primary"> • </span>
+                                            <span>Stock: {{this.stock}} unidades</span>
+                                        </div>
+                                        <p class="mt-4 mb-4 mb-md-0 small">
+                                            {{this.descripcion}}
+                                        </p>
+                                    </div>
+                                    <div class="col-12 col-xl-3 ps-xl-3">
+                                        <div class="d-flex justify-content-end mb-1">
+                                            <h4 class="p-2 mb-1 me-1">$ {{decimal this.precio}}</h4>
+                                        </div>
+                                        <div class="mt-4 text-end">
+                                            <button class="btn btn-primary btn-sm add-button" type="button" data-id="{{this.id}}">Agregar al carrito</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{/each}}
+    {{else}}
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-12 col-xl-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-info" role="alert">Sin productos cargados</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/if}}
+    </div>
+</section>

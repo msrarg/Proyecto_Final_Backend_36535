@@ -1,0 +1,64 @@
+{{#if items.length}}
+    {{#each items}}
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-12 col-xl-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="col-md-6 col-lg-5 col-xl-3 mb-4 mb-lg-0">
+                            <img src="{{this.foto}}" class="w-50 rounded mx-auto d-block" />
+                        </div>
+                        <div class="col-md-6 d-flex flex-wrap col-lg-7 col-xl-9 mb-4 mb-lg-0">
+                            <div class="col-12 col-xl-6">
+                                <h5>{{this.nombre}}</h5>
+                                <div class="mt-1 mb-0 text-muted small">
+                                    <span>Código: {{this.codigo}}</span>
+                                    <span class="text-primary"> • </span>
+                                    <span>Stock: {{this.stock}} unidades</span>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-xl-3">
+                                <div class="mt-4 text-end">
+                                    <div class="input-group mb-3 ">
+                                    <button class="btn btn-outline-danger remove-button" type="button" data-id="{{this.id}}">-</button>
+                                        <input type="text" style="text-align: center;" class="form-control" value="{{this.cantidad}}">
+                                    <button class="btn btn-outline-success add-button" type="button" data-id="{{this.id}}">+</button>
+                                    </div>                                        
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-xl-3 d-flex justify-content-end">
+                                <div class="align-self-center p-2">
+                                <h4 class="p-2 mb-1 me-1">$ {{decimal this.total}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+{{else}}
+    <div class="row justify-content-center mb-3">
+        <div class="col-md-12 col-xl-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="alert alert-info" role="alert">Sin productos en el carrito</div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/if}}
+<div class="row justify-content-center">
+    <div class="col-md-12 col-xl-10">
+            <div class="card">
+                    <div class="card-body d-flex justify-content-end">
+                    <div class="p-2 align-self-center">
+                            <h3>Total: $ <span id="totalCarrito">{{decimal totalCarrito}}</span></h3>
+                    </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+

@@ -1,61 +1,133 @@
-require('dotenv').config();
+import cluster from 'cluster';
+import cookieParser from 'cookie-parser';
+import core from 'os';
+import express from 'express';
+import fileUpload from 'express-fileupload';
+import handlebars from 'express-handlebars';
+import http from "http";
+const { engine } = handlebars;
+import path from'path';
+import { fileURLToPath } from 'url';
+import passport from 'passport';
 
-const cors = require('cors');
-const express = require('express');
-const { mongoConnection } = require('../config/config-db');
+import routerCarrito   from "../routes/carrito.js"
+import routerProductos from "../routes/productos.js"
+import routerShop      from "../routes/shop.js"
+import routerUsers     from "../routes/users.js"
+
+import { baseSession } from '../config/session.js';
+import { initializePassport } from '../config/passport.js';
+import logger from '../utils/logger.js'
+import { mongoConnection } from '../config/db.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
+
 class Server {
-    constructor(){
 
+    constructor() {
         this.app  = express();
-        this.port = process.env.PORT;
-        this.pathCarrito   = '/api/carrito';
-        this.pathProductos = '/api/productos';
+        this.server = http.Server(this.app);
+        this.port = process.env.PORT ? process.env.PORT : argv.port ? argv.port : 8080;
+        this.modo = process.env.MODO || 'cluster';
+        this.logger = logger;
 
-        // Database connection
-        this.dbConnection();
+        this.paths = {
+            productos: '/api/productos',
+            carrito:   '/api/carrito',
+            users:     '/api/usuarios',
+            shop:      '/',
+        }
 
-        // Middlewares
+        this.conectarDB();
         this.middlewares();
-
-        // Application's Routes
         this.routes();
     }
 
-    async dbConnection(){
-        await mongoConnection();
+    async conectarDB(){
+        if (process.env.ENGINE == 'MONGODB'){
+            await mongoConnection();
+        }
     }
 
-    middlewares(){
-        // CORS
-        this.app.use(cors());
-        // Lectura y parseo del body
-        this.app.use(express.json());
-        // Directorio publico
-        this.app.use(express.static('public'));
-        this.app.use(express.urlencoded({ extended: true }));
-        // this.app.use(express.urlencoded({ extendedparser : true })); Deprecado
+    middlewares() {
+        this.app.use( express.json() );
+        this.app.use( express.static('public') );
+        this.app.use(fileUpload({
+            useTempFiles : true,
+            tempFileDir : '/tmp/',
+            createParentPath:true
+        }));
+
+        this.app.use(cookieParser());
+        this.app.use(baseSession);
+        initializePassport();
+        this.app.use(passport.initialize());
+        this.app.use(passport.session());
+        this.app.engine(
+            "hbs",
+            engine({
+                extname: ".hbs",
+                defaultLayout: "layout.hbs",
+                layoutsDir:  path.join(__dirname,'../views/layouts/'),
+                partialsDir: path.join(__dirname,'../views/partials/'),
+                runtimeOptions: {
+                    allowProtoPropertiesByDefault: true,
+                    allowProtoMethodsByDefault: true,
+                }
+            })
+          );
+          
+        this.app.set("views", "./views");
+        this.app.set("view engine", "hbs");
+        this.app.set("logger", this.logger);
     }
 
-    routes(){
-        this.app.use(this.pathCarrito,   require('../routes/carritos.routes'));
-        this.app.use(this.pathProductos, require('../routes/productos.routes'));
+    routes() {
+        this.app.use( this.paths.users,     routerUsers );
+        this.app.use( this.paths.productos, routerProductos);
+        this.app.use( this.paths.carrito,   routerCarrito );
+        this.app.use( this.paths.shop,      routerShop );
 
-        // respond with 404 when no matching route is found
+
         this.app.use('*', (req, res) => {
-            const path   = req.originalUrl;
-            const method = req.method;
-            res.status(404).json({
-                    error: -2,
-                    descripcion:`La ruta ${path} y/o el método ${method} no se encuentran implementados`
+            const path = req.originalUrl;
+            const metodo = req.method;
+            const descripcion = `ruta ${path} método ${metodo} no implementada`
+            this.logger.warn(descripcion)
+            res.status(401).json({
+                error: -2,
+                descripcion
             });
         });
     }
 
-    listen(){
-        this.app.listen(this.port, () =>{
-            console.log(`Server up on port: ${this.port}`);
+    start() {
+        if (this.modo !== 'fork'){
+            if (cluster.isPrimary) {
+                this.logger.info(`Proceso principal ID:(${process.pid})`)
+                for(let i = 0; i <  core.cpus().length; i++) {
+                    cluster.fork();
+                }
+            
+                cluster.on('exit', (worker) => {
+                    cluster.fork();
+                });
+            
+            } else {
+                this.listen();
+            }
+        } else {
+            this.listen();
+        }
+    }
+
+    listen() {
+        this.server.listen( this.port, () => {
+            this.logger.info(`Server Up on port: ${this.port}`)
         });
     }
+
 }
 
-module.exports = { Server };
+export default Server;
