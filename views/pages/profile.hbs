@@ -1,0 +1,38 @@
+    {{> menu }}
+    <div class="row mt-3">
+        <div class="col-12 col-md-8">
+            <div class="card text-bg-light">
+                <div class="card-body">
+                    <h3>Datos personales</h3>
+                    <form autocomplete="off" id="profileForm" method="POST">
+                        {{> user-basic-form }}
+                        <div class="form-group mt-3" align="right">
+                            <button class="btn btn-success" type="submit" id="btnProfile">Guardar</button>
+                        </div>
+                    </form>                  
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-4 mt-3 mt-md-0">
+            <div class="card mb-4 text-bg-light">
+            <div class="card-body text-center">
+                <form autocomplete="off" id="profileImageForm" method="POST" enctype="multipart/form-data">
+                    <img src="{{userLogged.imageProfile}}" alt="avatar"
+                    class="rounded-circle img-fluid" style="width: 150px;" id="profileImageDisplay">
+                    <div>
+                        <div class="form-group mt-3">
+                            <label for="profileImage" class="form-label">Seleccione una imagen para su perfil:</label>
+                            <input class="form-control" type="file" id="profileImage" name="profileImage" />
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button class="btn btn-success" type="submit" id="btnProfileImage">Actualizar imagen</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="./js/profile.js"></script>

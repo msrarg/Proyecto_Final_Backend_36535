@@ -1,0 +1,30 @@
+       <div class="row">
+            <div class="card text-bg-light">
+                <div class="card-body  d-flex">
+                    <div class="p-2 align-self-center">
+                        <a href="/dashboard" class="btn btn-secondary">Inicio</a>
+                    </div>
+                    <div class="p-2 flex-grow-1 align-self-center">
+                        <h5 class="d-none d-md-block">Hola {{userLogged.nombre}}!</h5>
+                    </div>
+                    <div class="p-2 align-self-center">
+                        <a href="/cart" class="btn btn-primary">
+                        <i class="bi bi-cart"></i>
+                        <span class="badge text-bg-secondary" id="badgeCantProductos"></span>
+                        </a>
+                    </div>
+                    <div class="p-2">
+                        <div class="dropdown">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="rounded-circle article-img" src="{{userLogged.imageProfile}}" id="menuImageDisplay" style="width: 40px; height: auto;">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="/profile">Mis datos</a></li>
+                            <li><a class="dropdown-item" href="/logout">Salir</a></li>
+                        </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>

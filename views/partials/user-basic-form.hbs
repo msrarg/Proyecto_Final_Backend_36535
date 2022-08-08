@@ -1,0 +1,40 @@
+            <div class="row">
+                <div class="col-md-6 mt-3">
+                    <div class="form-group">
+                        <label for="nombre" class="form-label">Ingrese su nombre:</label>
+                        <input class="form-control" type="text" id="nombre" name="nombre" value="{{userLogged.nombre}}" autofocus />
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-3">
+                    <div class="form-group">
+                        <label for="email" class="form-label">Ingrese su email:</label>
+                        <input class="form-control" type="text" id="email" name="email"  value="{{userLogged.email}}"/>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mt-3">
+                    <div class="form-group">
+                        <label for="direccion" class="form-label">Ingrese su dirección:</label>
+                        <input class="form-control" type="text" id="direccion"name="direccion"   value="{{userLogged.direccion}}"/>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <div class="form-group">
+                        <label for="edad" class="form-label">Ingrese su edad:</label>
+                        <input class="form-control" type="number" id="edad"name="edad"   value="{{userLogged.edad}}"/>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <div class="form-group">
+                        <label for="telefono" class="form-label">Ingrese su teléfono:</label>
+                        <input class="form-control" type="tel" id="telefono"name="telefono"   value="{{userLogged.telefono}}"/>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+

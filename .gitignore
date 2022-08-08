@@ -1,1 +1,5 @@
 node_modules/
+.env
+/config/firebase-account-key.json
+/db/base.sqlite
+/logs/*.log

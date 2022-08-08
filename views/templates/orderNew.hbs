@@ -1,0 +1,24 @@
+<h5><strong>Datos del cliente:</strong></h5>
+<p><strong>Nombre:</strong> {{user.nombre}}</p>
+<p><strong>Email:</strong> {{user.email}}</p>
+<h5><strong>Productos</strong></h5>
+<table border="1">
+    <tr>
+        <td>Código</td>
+        <td>Producto</td>
+        <td>Precio</td>
+        <td >Cantidad</td>
+        <td>Total</td>
+    </tr>
+
+{{#each productos}}
+    <tr>
+        <td>{{ this.codigo }}</td>
+        <td>{{ this.nombre }}</td>
+        <td align="right">{{ this.precio }}</td>
+        <td align="right">{{ this.cantidad }}</td>
+        <td align="right">{{ this.total }}</td>
+    </tr>
+{{/each}}    
+</table>
+<h5><strong>Total:</strong>$ {{totalCarrito}}</h5>
