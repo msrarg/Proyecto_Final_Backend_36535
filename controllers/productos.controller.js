@@ -1,8 +1,10 @@
-const Product = require('../models/product');
+const {response} = require('express');
 
+const Product = require('../models/product');
 const product = new Product('./db/products.json', 'utf-8');
 
-const productosGetAllGetById = async (req, res) => {
+const productosGetAllGetById = async (req, res = response) => {
+    // Parámetros de segmento
     const id = parseInt(req.params.id);
     if(isNaN(id)){
         const productos = await product.getAllProducts();
@@ -17,7 +19,8 @@ const productosGetAllGetById = async (req, res) => {
     }
 }
 
-const productoSave = async (req, res) => {
+const productoSave = async (req, res = response) => {
+    // Parámetros de segmento
     const producto = req.body;
     const id = await product.saveProduct(producto);
     if (!isNaN(id)) {
@@ -27,7 +30,8 @@ const productoSave = async (req, res) => {
     }
 }
 
-const productoUpdate = async (req, res) => {
+const productoUpdate = async (req, res = response) => {
+    // Parámetros de segmento
     const id = parseInt(req.params.id);
     const producto = await product.getProductById(id);
     if (producto !== null) {
@@ -38,7 +42,8 @@ const productoUpdate = async (req, res) => {
     }
 }
 
-const productoDelete = async (req, res) => {
+const productoDelete = async (req, res = response) => {
+    // Parámetros de segmento
     const id = parseInt(req.params.id);
     const producto = await product.getProductById(id);
     if (producto !== null) {

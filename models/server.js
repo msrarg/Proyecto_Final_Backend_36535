@@ -1,26 +1,44 @@
-const express = require('express')
+require('dotenv').config();
 
+const cors = require('cors');
+const express = require('express');
+const { mongoConnection } = require('../config/config-db');
 class Server {
     constructor(){
-        this.app  = express()
-        this.port = process.env.port || 8080;
+
+        this.app  = express();
+        this.port = process.env.PORT;
         this.pathCarrito   = '/api/carrito';
         this.pathProductos = '/api/productos';
-        // this.administrador = false;
 
+        // Database connection
+        this.dbConnection();
+
+        // Middlewares
         this.middlewares();
+
+        // Application's Routes
         this.routes();
     }
+
+    async dbConnection(){
+        await mongoConnection();
+    }
+
     middlewares(){
+        // CORS
+        this.app.use(cors());
+        // Lectura y parseo del body
         this.app.use(express.json());
-        this.app.use(express.static('views'));
+        // Directorio publico
+        this.app.use(express.static('public'));
         this.app.use(express.urlencoded({ extended: true }));
         // this.app.use(express.urlencoded({ extendedparser : true })); Deprecado
     }
 
     routes(){
-        this.app.use(this.pathCarrito,   require('../routers/carritosRoutes'));
-        this.app.use(this.pathProductos, require('../routers/productosRoutes'));
+        this.app.use(this.pathCarrito,   require('../routes/carritos.routes'));
+        this.app.use(this.pathProductos, require('../routes/productos.routes'));
 
         // respond with 404 when no matching route is found
         this.app.use('*', (req, res) => {
@@ -35,9 +53,9 @@ class Server {
 
     listen(){
         this.app.listen(this.port, () =>{
-            console.log(`Server corriendo en el puerto: ${this.port}`);
+            console.log(`Server up on port: ${this.port}`);
         });
     }
 }
 
-module.exports = Server;
+module.exports = { Server };

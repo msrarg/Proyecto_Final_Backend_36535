@@ -4,9 +4,7 @@ const { carritoSave,
         carritoDelete,
         carritoProductosGetAll,
         carritoProductoSave,
-        carritoProductoDelete,
-    
-} = require('../controllers/carritosController');
+        carritoProductoDelete } = require('../controllers/carritos.controller');
 
 const router = Router();
 
@@ -16,4 +14,4 @@ router.get(   '/:id/productos',          carritoProductosGetAll) // Permite list
 router.post(  '/:id/productos',          carritoProductoSave)    // Para incorporar productos al carrito por su id de producto
 router.delete('/:id/productos/:id_prod', carritoProductoDelete)  // Eliminar un producto del carrito por su id de carrito y de producto
 
-module.exports = router;
+module.exports = { router };

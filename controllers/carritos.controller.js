@@ -1,15 +1,17 @@
-const Cart = require('../models/cart');
+const {response} = require('express');
 
+const Cart = require('../models/cart');
 const cart = new Cart('./db/carts.json', 'utf-8');
 
 // Crea un carrito y devuelve su id.
-const carritoSave = async (req, res) => {
+const carritoSave = async (req, res = response) => {
     const id_cart = await cart.saveCart()
     res.status(201).json({id_cart});
 }
 
 // Vacía un carrito y lo elimina.
-const carritoDelete = async (req, res) => {
+const carritoDelete = async (req, res = response) => {
+    // Parámetros de segmento
     const id_cart = parseInt(req.params.id);
     const carrito = await cart.getCartById(id_cart);
     if (carrito !== null) {
@@ -21,7 +23,8 @@ const carritoDelete = async (req, res) => {
 }
 
 // Permite listar todos los productos guardados en el carrito
-const carritoProductosGetAll = async (req, res) => {
+const carritoProductosGetAll = async (req, res = response) => {
+    // Parámetros de segmento
     const id_cart = parseInt(req.params.id);
     const carrito = await cart.getCartById(id_cart);
     if (carrito !== null) {
@@ -32,7 +35,8 @@ const carritoProductosGetAll = async (req, res) => {
 }
 
 // Para incorporar productos al carrito por su id de producto
-const carritoProductoSave = async (req, res) => {
+const carritoProductoSave = async (req, res = response) => {
+    // Parámetros de segmento
     const id_cart = parseInt(req.params.id);
     const productos = req.body;
     const carrito = await cart.getCartById(id_cart);
@@ -45,7 +49,8 @@ const carritoProductoSave = async (req, res) => {
 }
 
 // Eliminar un producto del carrito por su id de carrito y de producto
-const carritoProductoDelete = async (req, res) => {
+const carritoProductoDelete = async (req, res = response) => {
+    // Parámetros de segmento
     const id_cart = parseInt(req.params.id);
     const id_prod = parseInt(req.params.id_prod);
     const carrito = await cart.getCartById(id_cart);
@@ -63,4 +68,4 @@ module.exports = {
     carritoProductosGetAll,
     carritoProductoSave,
     carritoProductoDelete,
-}
+};

@@ -6,6 +6,8 @@ global.ADMIN = true;
 const server = new Server();
 server.listen();
 
+/*
+Ver si sirve para conectar a MongoDB:
 
 mongoose.connect('mongodb://localhost:27017/test')
 .then(() => {console.log('Conexión a la base de datos establecida')})
@@ -15,3 +17,4 @@ const Cat = mongoose.model('Cat', { name: String });
 
 const kitty = new Cat({ name: 'Zildjian' });
 kitty.save().then(() => console.log('meow'));
+*/

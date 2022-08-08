@@ -3,8 +3,7 @@ const { Router } = require('express');
 const { productosGetAllGetById,
         productoSave,
         productoUpdate,
-        productoDelete   
-} = require('../controllers/productosController');
+        productoDelete} = require('../controllers/productos.controller');
 
 const { validatePermissions } = require('../middlewares/validateRole');
 
