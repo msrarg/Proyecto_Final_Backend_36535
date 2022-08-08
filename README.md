@@ -2,8 +2,6 @@
 
 Proyecto ecommerce backend
 
-Link a Heroku [aquí](https://coderhouse-node-final.herokuapp.com)
-
 1 - Instalar las dependecias.
 npm install
 
@@ -14,7 +12,6 @@ npm run create-db
 
 4 - Arrancar server modo desarrollo
 npm run dev -- -p NUMERO_DE_PUERTO
-npm run dev -- -p 8080
 
 Para realizar pruebas locales se puede importar este [archivo](./postman_collection.json)  en Postman y ver los endpoints disponibles.
 
